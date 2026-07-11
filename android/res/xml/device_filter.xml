@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Roland Vendor ID: 0x0582 (1410) -->
+    <usb-device vendor-id="1410" />
+</resources>

@@ -1,0 +1,6 @@
+{
+  "name": "Boss GT-1 USB Driver",
+  "description": "Android USB Host app to control a Boss GT-1 multi-effects pedal via SysEx.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
