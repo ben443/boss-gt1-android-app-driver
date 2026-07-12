@@ -1,0 +1,50 @@
+name: Build Android APK
+
+on:
+  push:
+    # Trigger on push to main or master branch
+    branches: [ "main", "master" ]
+  # Trigger on pull request
+  pull_request:
+  # Allow manual trigger from the GitHub UI
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Debug APK
+    # Use Ubuntu runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        # Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        # Setup Java 17 Temurin
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        # Automatically handles Gradle caching and wrapper validation
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        # Ensure gradlew has execute permissions on Linux runners
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        # Run assembleDebug to build a Debug APK and bypass keystore/signing config needs
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        # Upload the generated APK as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-APK
+          # Accurately target the output directory for debug APKs
+          path: app/build/outputs/apk/debug/**/*.apk
+          # Keep the artifact for 7 days
+          retention-days: 7
